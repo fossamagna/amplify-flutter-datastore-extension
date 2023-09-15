@@ -3,10 +3,7 @@ import path from "node:path";
 import glob from "glob";
 import { parse } from "graphql";
 import { $TSContext } from "amplify-cli-core";
-import { codegen } from "@graphql-codegen/core";
-import type { Types } from "@graphql-codegen/plugin-helpers";
-import { plugin, addToSchema } from "../plugin";
-import { DART_SCALAR_MAP } from "@aws-amplify/appsync-modelgen-plugin/lib/scalars";
+import { generateExtensions } from "../extension";
 
 export const run = async (context: $TSContext) => {
   const allApiResources = await context.amplify.getResourceStatus("api");
@@ -41,31 +38,16 @@ export const run = async (context: $TSContext) => {
   const schema = parse(schemaContent);
 
   const modelFolder = "lib/models";
-
-  const options: Types.GenerateOptions = {
-    filename: path.join(modelFolder, "DataStoreExtension.dart"),
-    plugins: [
-      {
-        appSyncDartExtensionPlugin: {},
-      },
-    ],
+  const generatedOutput = await generateExtensions({
     schema,
-    documents: [],
-    config: {
-      directives: directiveDefinitions,
-      scalars: { ...DART_SCALAR_MAP },
-    },
-    pluginMap: {
-      appSyncDartExtensionPlugin: {
-        plugin,
-        addToSchema,
-      },
-    },
-  };
-  const generatedCode = await codegen(options);
+    directives: directiveDefinitions,
+    baseOutputDir: modelFolder,
+  });
 
-  fs.ensureFileSync(options.filename);
-  fs.writeFileSync(options.filename, generatedCode);
+  Object.entries(generatedOutput).map(([filename, content]) => {
+    fs.ensureFileSync(filename);
+    fs.writeFileSync(filename, content);
+  });
 
   context.print.info(
     `Successfully generated models. Generated models can be found in ${modelFolder}`
