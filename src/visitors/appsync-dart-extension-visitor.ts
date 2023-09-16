@@ -103,6 +103,9 @@ export class AppSyncDartExtensionVisitor<
       .map((arg) => `${arg.name}: ${arg.name}`)
       .join(", ");
     const modelName = this.getModelName(model);
+    const where = this.config.respectPrimaryKeyAttributesOnConnectionField
+      ? `${modelName}.MODEL_IDENTIFIER.eq(${modelName}ModelIdentifier(${identifierArgs})),`
+      : `${modelName}.ID.eq(${identifierArgs}),`;
 
     classDeclarationBlock.addClassMethod(
       `get${modelName}${nullable ? "OrNull" : ""}`,
@@ -111,9 +114,7 @@ export class AppSyncDartExtensionVisitor<
       [
         "return query(",
         indent(`${modelName}.classType,`),
-        indent(
-          `where: ${modelName}.MODEL_IDENTIFIER.eq(${modelName}ModelIdentifier(${identifierArgs})),`
-        ),
+        indent(`where: ${where}`),
         ")",
         `.then((list) => list.${nullable ? "singleOrNull" : "single"});`,
       ].join("\n"),
