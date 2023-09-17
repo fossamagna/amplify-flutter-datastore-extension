@@ -20,7 +20,7 @@
   },
   "dependencies": {
     "@aws-amplify/appsync-modelgen-plugin": "^2.6.0",
-    "@graphql-codegen/core": "2.6.6",
+    "@graphql-codegen/core": "2.6.8",
     "amplify-cli-core": "^4.0.4",
     "fs-extra": "^11.1.1",
     "glob": "^10.3.4",
