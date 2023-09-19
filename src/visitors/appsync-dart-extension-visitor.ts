@@ -27,14 +27,16 @@ export interface ParsedAppSyncDartExtensionConfig
   extends ParsedAppSyncModelConfig {}
 
 export class AppSyncDartExtensionVisitor<
-  TRawConfig extends RawAppSyncDartExtensionConfig = RawAppSyncDartExtensionConfig,
-  TPluginConfig extends ParsedAppSyncDartExtensionConfig = ParsedAppSyncDartExtensionConfig
+  TRawConfig extends
+    RawAppSyncDartExtensionConfig = RawAppSyncDartExtensionConfig,
+  TPluginConfig extends
+    ParsedAppSyncDartExtensionConfig = ParsedAppSyncDartExtensionConfig,
 > extends AppSyncModelVisitor<TRawConfig, TPluginConfig> {
   constructor(
     schema: GraphQLSchema,
     rawConfig: TRawConfig,
     additionalConfig: Partial<TPluginConfig>,
-    defaultScalars: NormalizedScalarsMap = DART_SCALAR_MAP
+    defaultScalars: NormalizedScalarsMap = DART_SCALAR_MAP,
   ) {
     super(schema, rawConfig, additionalConfig, defaultScalars);
   }
@@ -46,7 +48,7 @@ export class AppSyncDartExtensionVisitor<
     const shouldImputeKeyForUniDirectionalHasMany = false;
     this.processDirectives(
       shouldUseModelNameFieldInHasManyAndBelongsTo,
-      shouldImputeKeyForUniDirectionalHasMany
+      shouldImputeKeyForUniDirectionalHasMany,
     );
 
     return this.generateModelExtensionClasses();
@@ -81,7 +83,7 @@ export class AppSyncDartExtensionVisitor<
       .extensionOn("AmplifyDataStore")
       .withName(`${modelName}Extension`)
       .withComment(
-        `This is an auto generated extension representing the ${modelName} type in your schema.`
+        `This is an auto generated extension representing the ${modelName} type in your schema.`,
       );
     // get method
     this.generateGetModelMethod(model, classDeclarationBlock);
@@ -92,7 +94,7 @@ export class AppSyncDartExtensionVisitor<
   protected generateGetModelMethod(
     model: CodeGenModel,
     classDeclarationBlock: DartDeclarationBlock,
-    nullable = false
+    nullable = false,
   ): void {
     const identifierFields = this.getModelIdentifierFields(model);
     const args = identifierFields.map((field: CodeGenField) => ({
@@ -118,7 +120,7 @@ export class AppSyncDartExtensionVisitor<
         ")",
         `.then((list) => list.${nullable ? "singleOrNull" : "single"});`,
       ].join("\n"),
-      undefined
+      undefined,
     );
   }
 
@@ -154,10 +156,10 @@ export class AppSyncDartExtensionVisitor<
       .filter((f) => f)
       .map((pckg) => `import '${pckg}';`);
     packagesImports.push(
-      `import '${flutterDatastorePackage}.dart' as ${AMPLIFY_CORE_PREFIX};`
+      `import '${flutterDatastorePackage}.dart' as ${AMPLIFY_CORE_PREFIX};`,
     );
     packagesImports.push(
-      `import 'package:amplify_datastore/amplify_datastore.dart';`
+      `import 'package:amplify_datastore/amplify_datastore.dart';`,
     );
     return packagesImports.sort().join("\n") + "\n";
   }

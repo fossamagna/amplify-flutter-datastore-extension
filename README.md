@@ -89,7 +89,7 @@ extension TodoExtension on AmplifyDataStore {
     )
     .then((list) => list.single);
   }
-  
+
   Future<Todo?> getTodoOrNull(String id) {
     return query(
       Todo.classType,

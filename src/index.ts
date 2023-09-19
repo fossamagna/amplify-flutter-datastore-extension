@@ -10,11 +10,11 @@ export async function executeAmplifyCommand(context: $TSContext) {
 
 export async function handleAmplifyEvent(context: $TSContext, args: any) {
   const eventHandlersDirPath = path.normalize(
-    path.join(__dirname, "event-handlers")
+    path.join(__dirname, "event-handlers"),
   );
   const eventHandlerPath = path.join(
     eventHandlersDirPath,
-    `handle-${args.event}`
+    `handle-${args.event}`,
   );
   const eventHandlerModule = require(eventHandlerPath);
   await eventHandlerModule.run(context, args);

@@ -29,7 +29,7 @@ export const run = async (context: $TSContext) => {
   const apiResource = allApiResources.allResources.find(
     (resource: any) =>
       resource.service === "AppSync" &&
-      resource.providerPlugin === "awscloudformation"
+      resource.providerPlugin === "awscloudformation",
   );
 
   if (!apiResource) {
@@ -41,7 +41,7 @@ export const run = async (context: $TSContext) => {
   const apiResourcePath = path.join(
     backendPath,
     "api",
-    apiResource.resourceName
+    apiResource.resourceName,
   );
 
   const directiveDefinitions = await context.amplify.executeProviderUtils(
@@ -50,7 +50,7 @@ export const run = async (context: $TSContext) => {
     "getTransformerDirectives",
     {
       resourceDir: apiResourcePath,
-    }
+    },
   );
 
   const schemaContent = loadSchema(apiResourcePath);
@@ -64,20 +64,20 @@ export const run = async (context: $TSContext) => {
     emitAuthProvider: readFeatureFlag(context, "codegen.emitAuthProvider"),
     transformerVersion: readNumericFeatureFlag(
       context,
-      "graphQLTransformer.transformerVersion"
+      "graphQLTransformer.transformerVersion",
     ),
     respectPrimaryKeyAttributesOnConnectionField: readFeatureFlag(
       context,
-      "graphQLTransformer.respectPrimaryKeyAttributesOnConnectionField"
+      "graphQLTransformer.respectPrimaryKeyAttributesOnConnectionField",
     ),
     generateModelsForLazyLoadAndCustomSelectionSet: readFeatureFlag(
       context,
-      "codegen.generateModelsForLazyLoadAndCustomSelectionSet"
+      "codegen.generateModelsForLazyLoadAndCustomSelectionSet",
     ),
     addTimestampFields: readFeatureFlag(context, "codegen.addTimestampFields"),
     handleListNullabilityTransparently: readFeatureFlag(
       context,
-      "codegen.handleListNullabilityTransparently"
+      "codegen.handleListNullabilityTransparently",
     ),
   });
 
@@ -87,7 +87,7 @@ export const run = async (context: $TSContext) => {
   });
 
   context.print.info(
-    `Successfully generated extensions. Generated models can be found in ${modelFolder}`
+    `Successfully generated extensions. Generated models can be found in ${modelFolder}`,
   );
 };
 

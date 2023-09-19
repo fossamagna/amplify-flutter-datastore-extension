@@ -8,7 +8,7 @@ export { addToSchema } from "@aws-amplify/appsync-modelgen-plugin";
 export const plugin: PluginFunction<RawAppSyncModelConfig> = (
   schema: GraphQLSchema,
   rawDocuments: Types.DocumentFile[],
-  config: RawAppSyncModelConfig
+  config: RawAppSyncModelConfig,
 ) => {
   const visitor = new AppSyncDartExtensionVisitor(schema, config, {
     selectedType: config.selectedType,
