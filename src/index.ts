@@ -8,7 +8,7 @@ export async function executeAmplifyCommand(context: $TSContext) {
   await commandModule.run(context);
 }
 
-export async function handleAmplifyEvent(context: $TSContext, args: any) {
+export async function handleAmplifyEvent(context: $TSContext, args) {
   const eventHandlersDirPath = path.normalize(
     path.join(__dirname, "event-handlers"),
   );

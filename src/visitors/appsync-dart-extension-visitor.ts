@@ -68,7 +68,7 @@ export class AppSyncDartExtensionVisitor<
     result.push(packageImports);
 
     //Extension
-    Object.entries(this.getSelectedModels()).forEach(([name, model]) => {
+    Object.entries(this.getSelectedModels()).forEach(([, model]) => {
       const extensionDeclaration = this.generateExtensionClass(model);
       result.push(extensionDeclaration);
     });
@@ -141,7 +141,7 @@ export class AppSyncDartExtensionVisitor<
     Object.entries({
       ...this.getSelectedModels(),
       ...this.getSelectedNonModels(),
-    }).forEach(([name, model]) => {
+    }).forEach(([, model]) => {
       model.fields.forEach((f) => {
         if (f.isList) {
           usingCollection = true;
