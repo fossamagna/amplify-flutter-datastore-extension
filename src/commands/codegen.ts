@@ -27,7 +27,7 @@ export const run = async (context: $TSContext) => {
 
   const allApiResources = await context.amplify.getResourceStatus("api");
   const apiResource = allApiResources.allResources.find(
-    (resource) =>
+    (resource: { service: string; providerPlugin: string }) =>
       resource.service === "AppSync" &&
       resource.providerPlugin === "awscloudformation",
   );
