@@ -2,10 +2,29 @@ import fs from "fs-extra";
 import path from "node:path";
 import glob from "glob";
 import { parse } from "graphql";
-import { $TSContext } from "amplify-cli-core";
+import {
+  $TSContext,
+  CLIContextEnvironmentProvider,
+  FeatureFlags,
+  pathManager,
+  stateManager,
+} from "amplify-cli-core";
 import { generateExtensions } from "../extension";
+import { readFeatureFlag, readNumericFeatureFlag } from "../feature-flags";
 
 export const run = async (context: $TSContext) => {
+  // Initialize feature flags
+  if (!FeatureFlags.isInitialized()) {
+    const contextEnvironmentProvider = new CLIContextEnvironmentProvider({
+      getEnvInfo: context.amplify.getEnvInfo,
+    });
+
+    const projectPath = pathManager.findProjectRoot() ?? process.cwd();
+    const useNewDefaults = !stateManager.projectConfigExists(projectPath);
+
+    await FeatureFlags.initialize(contextEnvironmentProvider, useNewDefaults);
+  }
+
   const allApiResources = await context.amplify.getResourceStatus("api");
   const apiResource = allApiResources.allResources.find(
     (resource: any) =>
@@ -36,12 +55,30 @@ export const run = async (context: $TSContext) => {
 
   const schemaContent = loadSchema(apiResourcePath);
   const schema = parse(schemaContent);
-
   const modelFolder = "lib/models";
   const generatedOutput = await generateExtensions({
     schema,
     directives: directiveDefinitions,
     baseOutputDir: modelFolder,
+    generateIndexRules: readFeatureFlag(context, "codegen.generateIndexRules"),
+    emitAuthProvider: readFeatureFlag(context, "codegen.emitAuthProvider"),
+    transformerVersion: readNumericFeatureFlag(
+      context,
+      "graphQLTransformer.transformerVersion"
+    ),
+    respectPrimaryKeyAttributesOnConnectionField: readFeatureFlag(
+      context,
+      "graphQLTransformer.respectPrimaryKeyAttributesOnConnectionField"
+    ),
+    generateModelsForLazyLoadAndCustomSelectionSet: readFeatureFlag(
+      context,
+      "codegen.generateModelsForLazyLoadAndCustomSelectionSet"
+    ),
+    addTimestampFields: readFeatureFlag(context, "codegen.addTimestampFields"),
+    handleListNullabilityTransparently: readFeatureFlag(
+      context,
+      "codegen.handleListNullabilityTransparently"
+    ),
   });
 
   Object.entries(generatedOutput).map(([filename, content]) => {
@@ -50,7 +87,7 @@ export const run = async (context: $TSContext) => {
   });
 
   context.print.info(
-    `Successfully generated models. Generated models can be found in ${modelFolder}`
+    `Successfully generated extensions. Generated models can be found in ${modelFolder}`
   );
 };
 
