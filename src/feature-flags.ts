@@ -25,7 +25,7 @@ export const readFeatureFlag = (context: $TSContext, flagName: string) => {
       return false;
     }
     throw new Error(
-      `Feature flag value for parameter ${flagName} could not be marshalled to boolean type, found ${cliValue}`
+      `Feature flag value for parameter ${flagName} could not be marshalled to boolean type, found ${cliValue}`,
     );
   }
 
@@ -44,7 +44,7 @@ export const readFeatureFlag = (context: $TSContext, flagName: string) => {
  */
 export const readNumericFeatureFlag = (
   context: $TSContext,
-  flagName: string
+  flagName: string,
 ) => {
   const cliValue = cliFeatureFlagOverride(context, flagName);
   if (cliValue) {

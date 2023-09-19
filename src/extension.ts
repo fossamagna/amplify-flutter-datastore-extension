@@ -25,7 +25,7 @@ export type GeneratedOutput = {
 };
 
 export async function generateExtensions(
-  options: GenerateExtensionsOptions
+  options: GenerateExtensionsOptions,
 ): Promise<GeneratedOutput> {
   const {
     schema,

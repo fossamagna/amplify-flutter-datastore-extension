@@ -1,12 +1,6 @@
 {
   "name": "flutter-datastore-extension",
   "type": "util",
-  "commands": [
-    "version",
-    "help",
-    "codegen"
-  ],
-  "eventHandlers": [
-    "PostCodegenModels"
-  ]
+  "commands": ["version", "help", "codegen"],
+  "eventHandlers": ["PostCodegenModels"]
 }

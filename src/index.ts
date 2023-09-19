@@ -1,4 +1,4 @@
-import { $TSContext } from "amplify-cli-core";
+import { $TSAny, $TSContext } from "amplify-cli-core";
 import * as path from "path";
 
 export async function executeAmplifyCommand(context: $TSContext) {
@@ -8,13 +8,13 @@ export async function executeAmplifyCommand(context: $TSContext) {
   await commandModule.run(context);
 }
 
-export async function handleAmplifyEvent(context: $TSContext, args: any) {
+export async function handleAmplifyEvent(context: $TSContext, args: $TSAny) {
   const eventHandlersDirPath = path.normalize(
-    path.join(__dirname, "event-handlers")
+    path.join(__dirname, "event-handlers"),
   );
   const eventHandlerPath = path.join(
     eventHandlersDirPath,
-    `handle-${args.event}`
+    `handle-${args.event}`,
   );
   const eventHandlerModule = require(eventHandlerPath);
   await eventHandlerModule.run(context, args);
