@@ -10,11 +10,10 @@ exports[`extension should be generate extensions 1`] = `
 
 import 'ModelProvider.dart';
 import 'package:amplify_core/amplify_core.dart' as amplify_core;
-import 'package:amplify_datastore/amplify_datastore.dart';
 
 
 /** This is an auto generated extension representing the Todo type in your schema. */
-extension TodoExtension on AmplifyDataStore {
+extension TodoExtension on amplify_core.DataStoreCategory {
   Future<Todo> getTodo(String id) {
     return query(
       Todo.classType,
@@ -44,11 +43,10 @@ exports[`extension should be generate extensions with primaryKey and sortKey 1`]
 
 import 'ModelProvider.dart';
 import 'package:amplify_core/amplify_core.dart' as amplify_core;
-import 'package:amplify_datastore/amplify_datastore.dart';
 
 
 /** This is an auto generated extension representing the Inventory type in your schema. */
-extension InventoryExtension on AmplifyDataStore {
+extension InventoryExtension on amplify_core.DataStoreCategory {
   Future<Inventory> getInventory(String productID, String warehouseID) {
     return query(
       Inventory.classType,
@@ -78,11 +76,10 @@ exports[`extension should not be generate extensions with primaryKey and sortKey
 
 import 'ModelProvider.dart';
 import 'package:amplify_core/amplify_core.dart' as amplify_core;
-import 'package:amplify_datastore/amplify_datastore.dart';
 
 
 /** This is an auto generated extension representing the Inventory type in your schema. */
-extension InventoryExtension on AmplifyDataStore {
+extension InventoryExtension on amplify_core.DataStoreCategory {
   Future<Inventory> getInventory(String id) {
     return query(
       Inventory.classType,
