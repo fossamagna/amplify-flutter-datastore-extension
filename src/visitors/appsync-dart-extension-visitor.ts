@@ -80,7 +80,7 @@ export class AppSyncDartExtensionVisitor<
     const classDeclarationBlock = new DartDeclarationBlock();
     classDeclarationBlock
       .asKind("extension")
-      .extensionOn("AmplifyDataStore")
+      .extensionOn(`${AMPLIFY_CORE_PREFIX}.DataStoreCategory`)
       .withName(`${modelName}Extension`)
       .withComment(
         `This is an auto generated extension representing the ${modelName} type in your schema.`,
@@ -157,9 +157,6 @@ export class AppSyncDartExtensionVisitor<
       .map((pckg) => `import '${pckg}';`);
     packagesImports.push(
       `import '${flutterDatastorePackage}.dart' as ${AMPLIFY_CORE_PREFIX};`,
-    );
-    packagesImports.push(
-      `import 'package:amplify_datastore/amplify_datastore.dart';`,
     );
     return packagesImports.sort().join("\n") + "\n";
   }

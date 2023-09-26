@@ -80,10 +80,9 @@ The plugin outputs `DataStoreExtension.dart` with the following contents:
 ```dart
 import 'ModelProvider.dart';
 import 'package:amplify_core/amplify_core.dart' as amplify_core;
-import 'package:amplify_datastore/amplify_datastore.dart';
 
 /** This is an auto generated extension representing the Todo type in your schema. */
-extension TodoExtension on AmplifyDataStore {
+extension TodoExtension on amplify_core.DataStoreCategory {
   Future<Todo> getTodo(String id) {
     return query(
       Todo.classType,
@@ -100,6 +99,13 @@ extension TodoExtension on AmplifyDataStore {
     .then((list) => list.singleOrNull);
   }
 }
+```
+
+You can call it as follows:
+
+```dart
+final id = "080f33bf-0362-4c7f-9dfa-de64fc231dca";
+final todo = await Amplify.DataStore.getTodo(id);
 ```
 
 <!-- ROADMAP -->
