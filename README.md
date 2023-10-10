@@ -27,7 +27,7 @@
 This project is amplify plugin to generate Flutter Extensions for DataStore operations.
 This feature is automatically executed when run `amplify codegen models`.
 
-[![codecov](https://codecov.io/gh/fossamagna/amplify-flutter-datastore-extension/graph/badge.svg?token=J4S4TO6zXB)](https://codecov.io/gh/fossamagna/amplify-flutter-datastore-extension)
+[![NPM version][npm-image]][npm-url] [![codecov][codecov-image]][codecov-url]
 
 <!-- GETTING STARTED -->
 
@@ -139,3 +139,8 @@ Distributed under the Apache-2.0 License. See `LICENSE` for more information.
 Masahiko MURAKAMI - [@fossamagna](https://twitter.com/fossamagna)
 
 Project Link: [https://github.com/fossamagna/amplify-flutter-datastore-extension](https://github.com/fossamagna/amplify-flutter-datastore-extension)
+
+[npm-image]: https://badge.fury.io/js/amplify-flutter-datastore-extension.svg
+[npm-url]: https://npmjs.org/package/amplify-flutter-datastore-extension
+[codecov-image]: https://codecov.io/gh/fossamagna/amplify-flutter-datastore-extension/graph/badge.svg?token=J4S4TO6zXB
+[codecov-url]: https://codecov.io/gh/fossamagna/amplify-flutter-datastore-extension
