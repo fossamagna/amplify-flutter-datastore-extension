@@ -1,6 +1,6 @@
 {
   "name": "amplify-flutter-datastore-extension",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "amplify plugin to generate Flutter Extensions for DataStore operations.",
   "repository": {
     "type": "git",
