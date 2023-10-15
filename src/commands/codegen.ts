@@ -13,6 +13,10 @@ import { generateExtensions } from "../extension";
 import { readFeatureFlag, readNumericFeatureFlag } from "../feature-flags";
 
 export const run = async (context: $TSContext) => {
+  const projectConfig = context.amplify.getProjectConfig();
+  if (projectConfig.frontend !== "flutter") {
+    return;
+  }
   // Initialize feature flags
   if (!FeatureFlags.isInitialized()) {
     const contextEnvironmentProvider = new CLIContextEnvironmentProvider({
